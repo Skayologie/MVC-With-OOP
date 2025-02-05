@@ -12,7 +12,10 @@ class DashboardController{
         $this->twig = $twig;
     }
     public function index() {
-        $this->twig->render("back/dashboard.twig");
+        echo $this->twig->render('back/dashboard.twig',[
+            "TotalUsers"=>45,
+            "TotalArticles"=>15,
+        ]);
     }
 
 }

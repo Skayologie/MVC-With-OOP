@@ -7,7 +7,8 @@
         hello ,
     {% endif %}
 
-    <a href="/">Back To Home</a><br>
+    <a href="{% if role is same as('admin') %}/admin/dashboard{% else %}/{% endif %}">Back To Home</a><br>
+
     {% if isAuth %}
 
     {% else %}
@@ -16,7 +17,7 @@
     {% endif %}
 
 
-    {% if isAuth %}
+    {% if role is same as('user') %}
         <h1>Here your can add an article </h1>
         {{ msg.msg }}
         <form method="post" action="article">
@@ -33,6 +34,7 @@
         </form>
     {% endif %}
     <div>
+        <h2>All Articles</h2>
     <ul>
         {% for article in articles %}
             <li>

@@ -3,6 +3,7 @@ namespace App\controllers;
 require realpath(__DIR__."/../../vendor/autoload.php");
 use App\core\Controller;
 use App\core\Router;
+use App\core\Session;
 use App\models\Article;
 use Twig\Environment;
 
@@ -33,10 +34,13 @@ class ArticleController extends Controller
                     'title' => 'Welcome',
                     'articles' => Article::get(),
                     'isAuth' => $isAuth,
-                    'msg' => $message
+                    'msg' => $message,
+                    'role'=> Session::get("message")["role"]
                 ]);
             }else{
-                echo $this->twig->render('front/404.twig', []);
+                echo $this->twig->render('front/404.twig', [
+                    'role'=> Session::get("message")["role"]
+                ]);
             }
 
         }

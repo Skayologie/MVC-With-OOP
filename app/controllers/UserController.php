@@ -45,9 +45,7 @@ class UserController
                 if ($role === "user"){
                     header("location:/article");
                 }elseif ($role === "admin"){
-                    echo $this->twig->render('back/article.twig',[
-                        'title' => 'Articles',
-                    ]);
+                    header("Location:/admin/dashboard");
                 }
             }else{
                 echo $this->twig->render('front/login.twig',[

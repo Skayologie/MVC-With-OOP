@@ -1,1 +1,18 @@
-Admin Dashboard
+{% extends("layouts/master.twig") %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+
+    <ul>
+        <li>
+            TotalUsers : {{ TotalUsers }}
+            <a href="/admin/users"><button>Show Users</button></a>
+        </li>
+        <li>
+            TotalArticles : {{ TotalArticles }}
+            <a href="/article"><button>Show Articles</button></a>
+        </li>
+
+    </ul>
+{% endblock %}

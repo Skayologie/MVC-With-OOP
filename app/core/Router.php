@@ -49,7 +49,10 @@ class Router {
                 return;
             }
         }
-        echo $this->twig->render("front/404.twig");
+        echo $this->twig->render("front/404.twig",[
+            'role'=> Session::get("message")["role"]
+
+        ]);
 
 
     }

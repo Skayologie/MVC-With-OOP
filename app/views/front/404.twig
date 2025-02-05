@@ -1,1 +1,1 @@
-Page Found 404 <a href="/">Back To Home</a>
+Page Found 404 <a href="{% if role is same as('admin') %}/admin/dashboard{% else %}/{% endif %}">Back To Home</a>

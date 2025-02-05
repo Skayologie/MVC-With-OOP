@@ -1,6 +1,7 @@
 <?php
 
 use App\controllers\ArticleController;
+use App\controllers\DashboardController;
 use App\controllers\HomeController;
 use App\controllers\UserController;
 use App\core\Router;
@@ -22,6 +23,8 @@ $router->get("/register",UserController::class, "register");
 $router->post("/register",UserController::class, "register");
 $router->post("/login",UserController::class, "login");
 $router->get("/logout",UserController::class, "logout");
+
+$router->get('/admin/dashboard',DashboardController::class,"index");
 
 
 $router->dispatch();
