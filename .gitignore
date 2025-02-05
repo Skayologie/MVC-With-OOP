@@ -1,2 +1,4 @@
 # Ignore files
 vendor
+.idea
+.env
