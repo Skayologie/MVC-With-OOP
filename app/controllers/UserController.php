@@ -8,6 +8,9 @@ use App\core\View;
 use App\models\Article;
 use App\models\User;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class UserController
 {
@@ -66,16 +69,32 @@ class UserController
 
         }
     }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     * @throws \Exception
+     */
     public function register(){
         $ArticleCon = new ArticleController($this->twig);
-        if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"]=="POST"){
-            $User = new User($_POST["Email"],$_POST["password"],$_POST["username"]);
-            $User->register();
-            $msg = $_SESSION["message"];
-            if ($msg){
-
-            }else{
-
+        if(isset($_POST["submit"]) && isset($_POST["Email"]) && isset($_POST["password"]) && $_SERVER["REQUEST_METHOD"]=="POST"){
+            try{
+                $User = new User($_POST["Email"],$_POST["password"],$_POST["username"]);
+                $result = $User->register();
+                if ($result["status"]){
+                    echo $this->twig->render("front/login.twig",[
+                        "message"=>$result["message"]
+                    ]);
+                }else{
+                    echo $this->twig->render("front/register.twig",[
+                        "message"=>$result["message"]
+                    ]);
+                }
+            }catch (\Exception $e){
+                echo $this->twig->render("front/register.twig",[
+                    "message"=>$e->getMessage()
+                ]);
             }
         }
         else{

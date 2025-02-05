@@ -16,23 +16,16 @@ class User
     private $email;
     private $password;
 
-    public function __construct($email,$password,$username=""){
+
+    public function __construct($email, $password, $username="Skayologie"){
         $this->database = new Database();
-        if (Validator::validate_email($email) || Validator::validate_username($username) || Validator::validate_password($password)){
+        if (Validator::validate_email($email) && Validator::validate_username($username) && Validator::validate_password($password)){
             $this->email = $email;
             $this->password = $password;
             $this->username = $username;
-            $_SESSION["message"] = [
-                "status"=>true,
-                "message"=>"Data Registered"
-            ];
         }else{
-            $_SESSION["message"] = [
-                "status"=>false,
-                "message"=>"Data not correct !"
-            ];
+            throw new \Exception("Data not Valid !");
         }
-        return $_SESSION["message"];
     }
 
     public function register(){
@@ -42,15 +35,22 @@ class User
             $hashedPassword = password_hash($this->password,PASSWORD_BCRYPT);
             $sql = "INSERT INTO Users (username, email, password) VALUES('$this->username','$this->email','$hashedPassword')";
             $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $_SESSION["message"] = [
-                "status"=>true,
-                "message"=>"Registred successfully !"
-            ];
+            if ($stmt->execute()){
+                $_SESSION["message"] = [
+                    "status"=>true,
+                    "message"=>"Registred successfully !"
+                ];
+            }else{
+                $_SESSION["message"] = [
+                    "status"=>false,
+                    "message"=>"Register Failed !"
+                ];
+            }
+
         }catch (\PDOException $e){
             $_SESSION["message"] = [
                 "status"=>false,
-                "message"=>"Data not correct !"
+                "message"=>"Data not correct or empty !"
             ];
         }
         return $_SESSION["message"] ;
