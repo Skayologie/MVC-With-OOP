@@ -20,13 +20,17 @@ class ArticleController extends Controller
             $isAuth = true;
         }
         if ($id >= 0){
-            echo $this->twig->render('front/articleDetails.twig', [
-                'title' => 'Articles',
-                'articleDetails' => Article::getByID($id),
-                'isAuth' => $isAuth
-            ]);
+            if ($isAuth) {
+                echo $this->twig->render('front/articleDetails.twig', [
+                    'title' => 'Articles',
+                    'articleDetails' => Article::getByID($id),
+                    'isAuth' => $isAuth
+                ]);
+            }else{
+                echo $this->twig->render('front/404.twig', []);
+            }
         }else{
-            if (isset($_SESSION["message"]["isAuth"]) && $_SESSION["message"]["isAuth"] ){
+            if ($isAuth){
                 echo $this->twig->render('front/article.twig', [
                     'title' => 'Welcome',
                     'articles' => Article::get(),

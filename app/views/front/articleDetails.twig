@@ -4,6 +4,7 @@
 {% endblock  %}
 {% block content %}
 <a href="/article">Back To Articles</a>
+{% if isAuth %}
 <h1>Here your can add an article </h1>
 
 <div>
@@ -15,5 +16,6 @@
         <li>Description : {{ articleDetails.description }}</li>
     </ul>
 </div>
+{% endif %}
 {% endblock %}
 

@@ -48,7 +48,6 @@ class Router {
                 call_user_func_array([$controller, $action], $matches);
                 return;
             }
-
         }
         echo $this->twig->render("front/404.twig");
 

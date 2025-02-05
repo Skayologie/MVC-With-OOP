@@ -65,7 +65,7 @@ class User
             $stmt->execute([$this->email]);
             if ($stmt->rowCount() > 0){
                 $result = $stmt->fetch();
-                if (password_verify($this->password,$result["password"])){
+                if (password_verify($this->password,$result["password"])){ // Thats mean is the password is correct
                     $_SESSION["message"] = [
                         "status"=>true,
                         "message"=>"Logged successfully !",
@@ -74,14 +74,14 @@ class User
                         "email"=>$result["email"],
                         "role"=>$result["role"],
                     ];
-                }else{
+                }else{ // Thats mean is the password is incorrect
                     $_SESSION["message"] = [
                         "status"=>false,
                         "message"=>"Sorry But The Password is incorrect !!",
                         "isAuth"=>false
                     ];
                 }
-            }else{
+            }else{// Thats mean is the email is not exist
                 $_SESSION["message"] = [
                     "status"=>false,
                     "message"=>"Sorry But there is no account with this Email .",

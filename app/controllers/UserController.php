@@ -35,23 +35,23 @@ class UserController
 
         if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"]=="POST") {
             $User = new User($_POST["Email"],$_POST["password"]);
-            $User->login();
-            $msg = $_SESSION["message"];
-            $message = $msg["message"];
-            echo $message;
-            if ($msg["status"]){
-                $role = $msg["role"];
+            $result = $User->login();
+
+            if ($result["status"]){
+                $role = $result["status"];
                 if ($role === "user"){
-                    $ArticleCon->index();
+                    echo $this->twig->render('front/article.twig',[
+                        'title' => 'Articles',
+                    ]);
                 }elseif ($role === "admin"){
-                    $DashboardCon->index();
-                }else{
-                    echo "hello";
+                    echo $this->twig->render('back/article.twig',[
+                        'title' => 'Articles',
+                    ]);
                 }
             }else{
                 echo $this->twig->render('front/login.twig',[
                     'title' => 'Login',
-                    'message'=> $message
+                    'message'=> $result["message"]
                 ]);
             }
         }else{
