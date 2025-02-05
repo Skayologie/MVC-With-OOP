@@ -4,6 +4,7 @@ namespace App\models;
 
 
 use App\core\Database;
+use App\core\Session;
 use App\core\Validator;
 use PDO;
 
@@ -24,6 +25,7 @@ class User
             $this->password = $password;
             $this->username = $username;
         }else{
+            header("Location: " . $_SERVER['HTTP_REFERER']);
             throw new \Exception("Data not Valid !");
         }
     }
@@ -66,40 +68,40 @@ class User
             if ($stmt->rowCount() > 0){
                 $result = $stmt->fetch();
                 if (password_verify($this->password,$result["password"])){ // Thats mean is the password is correct
-                    $_SESSION["message"] = [
+                    Session::set("message",[
                         "status"=>true,
                         "message"=>"Logged successfully !",
                         "isAuth"=>true,
                         "username"=>$result["username"],
                         "email"=>$result["email"],
                         "role"=>$result["role"],
-                    ];
+                    ]);
                 }else{ // Thats mean is the password is incorrect
-                    $_SESSION["message"] = [
+                    Session::set("message",[
                         "status"=>false,
                         "message"=>"Sorry But The Password is incorrect !!",
                         "isAuth"=>false
-                    ];
+                    ]);
                 }
             }else{// Thats mean is the email is not exist
-                $_SESSION["message"] = [
+                Session::set("message",[
                     "status"=>false,
                     "message"=>"Sorry But there is no account with this Email .",
                     "isAuth"=>false
-                ];
+                ]);
             }
         }catch (\PDOException $e){
-            $_SESSION["message"] = [
+            Session::set("message",[
                 "status"=>false,
                 "message"=>"DB Problems",
                 "isAuth"=>false
-            ];
+            ]);
         }
-        return $_SESSION["message"];
+        return Session::get("message");
     }
 
     public static function logout(){
-        session_destroy();
+        Session::destroy();
     }
 
 }
