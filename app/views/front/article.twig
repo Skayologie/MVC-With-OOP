@@ -1,0 +1,47 @@
+{% extends("layouts/master.twig") %}
+{% block title %}
+    Articles
+{% endblock  %}
+{% block content %}
+    {% if message %}
+        hello ,
+    {% endif %}
+
+    <a href="/">Back To Home</a><br>
+    {% if isAuth %}
+
+    {% else %}
+        <a href="/login">login</a><br>
+        <a href="/register">Create An Account</a><br>
+    {% endif %}
+
+
+    {% if isAuth %}
+        <h1>Here your can add an article </h1>
+        {{ msg.msg }}
+        <form method="post" action="article">
+            <label>Title</label>
+            <input name="title" type="text" placeholder="Enter the article Product"/>
+            <br>
+            <label>Description</label>
+            <textarea name="description" ></textarea>
+            <br>
+            <label>Category</label>
+            <input name="categorie"  type="text" placeholder="Enter the article Product"/>
+            <br>
+            <button name="submit" type="submit">Add Article</button>
+        </form>
+    {% endif %}
+    <div>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="../../../article/{{ article.article_id }}">
+                    {{ article.article_id }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    </div>
+{% endblock  %}

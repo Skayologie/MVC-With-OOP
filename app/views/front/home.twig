@@ -1,0 +1,19 @@
+{% extends("layouts/master.twig") %}
+{% block title %}
+    Home
+{% endblock  %}
+{% block content %}
+    <div>
+    {% if isAuth %}
+        <a href="/logout">Log out</a><br>
+        <a href="/article">Show Articles</a><br>
+
+        <h2>Hello {{ username }}</h2>
+    {% else %}
+        <a href="/login">login</a><br>
+        <a href="/register">Create An Account</a><br>
+    {% endif %}
+    </div>
+{% endblock  %}
+
+

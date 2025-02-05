@@ -1,0 +1,24 @@
+{% extends("layouts/master.twig") %}
+{% block title %}
+    Register
+{% endblock  %}
+{% block content %}
+
+<a href="/">Back To Home</a><br>
+    <a href="/login">login</a><br>
+
+    <h1>Register</h1>
+        <form method="post" action="register">
+        <label>Username</label>
+        <input name="username" type="text" placeholder="username"/>
+        <br>
+        <label>Email</label>
+        <input name="Email" type="text" placeholder="Email"/>
+        <br>
+        <label>Password</label>
+        <input name="password"  type="text" placeholder="password"/>
+        <br>
+        <button name="submit" type="submit">Register</button>
+    </form>
+{% endblock  %}
+

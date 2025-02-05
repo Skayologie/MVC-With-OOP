@@ -1,0 +1,19 @@
+{% extends("layouts/master.twig") %}
+{% block title %}
+    {{ articleDetails.title }}
+{% endblock  %}
+{% block content %}
+<a href="/article">Back To Articles</a>
+<h1>Here your can add an article </h1>
+
+<div>
+    <ul>
+        <li>Article ID : {{ articleDetails.article_id }}</li>
+        <li>Created By : {{ articleDetails.username }}</li>
+        <li>Title : {{ articleDetails.title }}</li>
+        <li>Category : {{ articleDetails.category }}</li>
+        <li>Description : {{ articleDetails.description }}</li>
+    </ul>
+</div>
+{% endblock %}
+
