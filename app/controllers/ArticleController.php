@@ -15,10 +15,8 @@ class ArticleController extends Controller
         $this->twig = $twig;
     }
     public function index($id="",$message = null) {
-        $isAuth = false;
-        if (isset($_SESSION["message"]["isAuth"])){
-            $isAuth = true;
-        }
+        $isAuth = $_SESSION["message"]["isAuth"] ?? false;
+
         if ($id >= 0){
             if ($isAuth) {
                 echo $this->twig->render('front/articleDetails.twig', [

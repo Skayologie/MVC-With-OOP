@@ -31,14 +31,14 @@ class UserController
 
     public function login(){
         $ArticleCon = new ArticleController($this->twig);
-        $DashboardCon = new DashboardController($this->twig);
 
-        if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"]=="POST") {
+        if(isset($_POST["submit"]) && isset($_POST["Email"]) && isset($_POST["password"]) && $_SERVER["REQUEST_METHOD"]=="POST") {
             $User = new User($_POST["Email"],$_POST["password"]);
             $result = $User->login();
 
             if ($result["status"]){
-                $role = $result["status"];
+                $role = $result["role"];
+                echo $role;
                 if ($role === "user"){
                     echo $this->twig->render('front/article.twig',[
                         'title' => 'Articles',
@@ -55,13 +55,12 @@ class UserController
                 ]);
             }
         }else{
-            $isAuth = isset($_SESSION["message"]["isAuth"]) ?? $_SESSION["message"]["isAuth"] ;
+            $isAuth = $_SESSION["message"]["isAuth"] ?? false;
             if ($isAuth){
                 $ArticleCon->index();
-
             }else{
                 echo $this->twig->render('front/login.twig', [
-                    'title' => 'Welcome',
+                    'title' => 'Login',
                 ]);
             }
 
@@ -80,7 +79,8 @@ class UserController
             }
         }
         else{
-            $isAuth = isset($_SESSION["message"]["isAuth"]) ?? $_SESSION["message"]["isAuth"] ;
+            $isAuth = $_SESSION["message"]["isAuth"] ?? false;
+
             if ($isAuth){
                 $ArticleCon->index();
             }else{

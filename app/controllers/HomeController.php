@@ -13,12 +13,10 @@ class HomeController extends Controller
         $this->twig = $twig;
     }
     public function index() {
-        $isAuth = false;
-        if (isset($_SESSION["message"]["isAuth"])){
-            $isAuth = true;
-        }
-        $username =  isset($_SESSION["message"]) ? $_SESSION["message"]["username"] : "Not found" ;
-        $email = isset($_SESSION["message"]) ?? $_SESSION["message"]["email"] ;
+        $isAuth = $_SESSION["message"]["isAuth"] ?? false;
+
+        $username = $_SESSION["message"]["username"] ?? "Not found" ;
+        $email = $_SESSION["message"]["email"] ?? "Not found" ;
         echo $this->twig->render('front/home.twig', [
             'title' => 'Welcome',
             'content' => 'Hello World!',
